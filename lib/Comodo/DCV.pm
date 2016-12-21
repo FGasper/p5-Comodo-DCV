@@ -6,7 +6,7 @@ use warnings;
 use Digest::MD5 ();
 use Digest::SHA ();
 
-our $VERSION = 0.02;
+our $VERSION = 0.03;
 
 =pod
 
@@ -43,7 +43,9 @@ sub get_filename_and_contents {
 
     die 'Call in list context!' if !wantarray;
 
-    my $md5_hash = Digest::MD5::md5_hex($csr_der) =~ tr<a-f><A-F>r;
+    my $md5_hash = Digest::MD5::md5_hex($csr_der);
+    $md5_hash =~ tr<a-f><A-F>;
+
     my $filename = "$md5_hash.txt";
 
     my $contents = join(
